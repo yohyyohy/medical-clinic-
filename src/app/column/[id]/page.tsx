@@ -32,9 +32,9 @@ const columns = [
   },
 ];
 
-// ✅ `params` の型を `Record<string, string>` に変更
-type PageProps = {
-  params: Record<string, string>;
+// 🚀 `params` の型を `Promise<{ id: string }>` に変更
+type AsyncPageParams = {
+  params: Promise<{ id: string }>;
 };
 
 // ✅ Next.js に `params` の静的パスを事前に登録（SSG向け）
@@ -44,8 +44,11 @@ export function generateStaticParams() {
   }));
 }
 
-export default function ColumnPage({ params }: PageProps) {
-  const column = columns.find((c) => c.id === params.id);
+export default async function ColumnPage({ params }: AsyncPageParams) {
+  // 🚀 `params` を await で解決し、確実に `string` を取得する
+  const { id } = await params;
+
+  const column = columns.find((c) => c.id === id);
 
   if (!column) {
     return <div>コラムが見つかりません</div>;
