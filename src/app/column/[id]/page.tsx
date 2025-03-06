@@ -1,10 +1,10 @@
 import { Header } from "@/components/layout/Header"
 import { Heart, Stethoscope, Brain } from "lucide-react"
 
-// コラムデータ（仮データ）
+// コラムデータ
 const columns = [
   {
-    id: 1,
+    id: "1",
     title: "高血圧の予防と対策",
     date: "2025.02.15",
     icon: Heart,
@@ -13,7 +13,7 @@ const columns = [
       "高血圧は現代社会において非常に一般的な健康問題です。本記事では、高血圧の原因、リスク、そして効果的な予防法と対策について詳しく解説します。...",
   },
   {
-    id: 2,
+    id: "2",
     title: "風邪とインフルエンザの違い",
     date: "2025.02.10",
     icon: Stethoscope,
@@ -22,7 +22,7 @@ const columns = [
       "風邪とインフルエンザは似たような症状を示すことがありますが、その原因や重症度は大きく異なります。この記事では、両者の違いと適切な対処法を紹介します。...",
   },
   {
-    id: 3,
+    id: "3",
     title: "ストレス解消法：心と体のバランス",
     date: "2025.02.05",
     icon: Brain,
@@ -30,27 +30,25 @@ const columns = [
     content:
       "現代社会ではストレスを完全に避けることは難しいですが、適切な管理は可能です。ここでは、効果的なストレス解消法と、心身のバランスを保つためのテクニックを紹介します。...",
   },
-]
+];
 
-// 🚀 `params` の型を修正
-type PageParams = {
-  params: {
-    id: string;
-  };
+// ✅ `params` の型を `Record<string, string>` に変更
+type PageProps = {
+  params: Record<string, string>;
 };
 
-// ✅ `generateStaticParams` を追加（SSGで使用）
+// ✅ Next.js に `params` の静的パスを事前に登録（SSG向け）
 export function generateStaticParams() {
   return columns.map((column) => ({
-    id: column.id.toString(),
+    id: column.id,
   }));
 }
 
-export default function ColumnPage({ params }: PageParams) {
-  const column = columns.find((c) => c.id === Number(params.id))
+export default function ColumnPage({ params }: PageProps) {
+  const column = columns.find((c) => c.id === params.id);
 
   if (!column) {
-    return <div>コラムが見つかりません</div>
+    return <div>コラムが見つかりません</div>;
   }
 
   return (
@@ -79,5 +77,5 @@ export default function ColumnPage({ params }: PageParams) {
         </article>
       </main>
     </div>
-  )
+  );
 }
