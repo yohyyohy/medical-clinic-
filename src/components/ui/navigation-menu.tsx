@@ -94,7 +94,7 @@ NavigationMenuViewport.displayName = NavigationMenuPrimitive.Viewport.displayNam
 
 const NavigationMenuIndicator = React.forwardRef<
   React.ElementRef<typeof NavigationMenuPrimitive.Indicator>,
-  React.ComponentPropsWithoutError<typeof NavigationMenuPrimitive.Indicator>
+  React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.Indicator> // 🔥 修正
 >(({ className, ...props }, ref) => (
   <NavigationMenuPrimitive.Indicator
     ref={ref}
