@@ -1,6 +1,5 @@
 import { Header } from "@/components/layout/Header"
 import { Heart, Stethoscope, Brain } from "lucide-react"
-import { PageProps } from "next"
 
 const columns = [
   {
@@ -32,8 +31,14 @@ const columns = [
   },
 ]
 
-// 🚀 `PageProps` を使って型を定義
-export default function ColumnPage({ params }: PageProps) {
+// 🚀 `params` の型を独自に定義
+type PageParams = {
+  params: {
+    id: string;
+  };
+};
+
+export default function ColumnPage({ params }: PageParams) {
   const column = columns.find((c) => c.id === Number(params.id))
 
   if (!column) {
