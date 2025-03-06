@@ -1,5 +1,6 @@
 import { Header } from "@/components/layout/Header"
 import { Heart, Stethoscope, Brain } from "lucide-react"
+import { PageProps } from "next"
 
 const columns = [
   {
@@ -31,7 +32,8 @@ const columns = [
   },
 ]
 
-export default function ColumnPage({ params }: { params: { id: string } }) {
+// 🚀 `PageProps` を使って型を定義
+export default function ColumnPage({ params }: PageProps) {
   const column = columns.find((c) => c.id === Number(params.id))
 
   if (!column) {
@@ -60,11 +62,9 @@ export default function ColumnPage({ params }: { params: { id: string } }) {
           </h1>
           <div className="prose max-w-none">
             <p>{column.content}</p>
-            {/* ここに記事の本文を追加 */}
           </div>
         </article>
       </main>
     </div>
   )
 }
-
