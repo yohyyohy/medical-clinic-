@@ -1,6 +1,7 @@
 import { Header } from "@/components/layout/Header"
 import { Heart, Stethoscope, Brain } from "lucide-react"
 
+// コラムデータ（仮データ）
 const columns = [
   {
     id: 1,
@@ -31,12 +32,19 @@ const columns = [
   },
 ]
 
-// 🚀 `params` の型を独自に定義
+// 🚀 `params` の型を修正
 type PageParams = {
   params: {
     id: string;
   };
 };
+
+// ✅ `generateStaticParams` を追加（SSGで使用）
+export function generateStaticParams() {
+  return columns.map((column) => ({
+    id: column.id.toString(),
+  }));
+}
 
 export default function ColumnPage({ params }: PageParams) {
   const column = columns.find((c) => c.id === Number(params.id))
