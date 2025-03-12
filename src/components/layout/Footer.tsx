@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ArrowRight, Clock, Calendar, MapPin, Phone, MessageCircle } from "lucide-react"
+import { ArrowRight, Clock, MapPin, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export function Footer() {
@@ -39,9 +39,9 @@ export function Footer() {
                 <p className="text-lg md:text-xl font-medium">アクセス</p>
                 <p className="text-base md:text-lg text-gray-600">京王線・笹塚駅から徒歩1分</p>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mt-8">
-                {/* 診療時間 */}
-                <div className="bg-white p-6 rounded-lg shadow-md md:col-span-3">
+              <div className="mt-8">
+                {/* 診療時間 - 予約枠を削除し、診療時間テーブルを全幅に */}
+                <div className="bg-white p-6 rounded-lg shadow-md w-full">
                   <div className="flex items-center gap-2 mb-4">
                     <Clock className="w-6 h-6 text-[#a4c9c8]" />
                     <h3 className="text-xl font-medium">診療時間</h3>
@@ -85,23 +85,6 @@ export function Footer() {
                   <p className="text-xs text-gray-600 mt-3">
                     予約なしでも受診できますが、予約の方が優先される場合がございますのでご了承ください。
                   </p>
-                </div>
-                {/* Web予約 */}
-                <div className="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between">
-                  <div>
-                    <h3 className="text-xl font-medium mb-4">予約</h3>
-                    <p className="text-sm text-gray-600 mb-4">24時間予約可能</p>
-                  </div>
-                  <div className="space-y-2">
-                    <Button className="w-full bg-[#a4c9c8] hover:bg-[#93b5b4] text-white text-base py-3">
-                      <Calendar className="w-5 h-5 mr-2" />
-                      Web予約
-                    </Button>
-                    <Button className="w-full bg-green-600 hover:bg-green-700 text-white text-base py-3">
-                      <MessageCircle className="w-5 h-5 mr-2" />
-                      LINE予約<span className="text-xs ml-1">（工事中）</span>
-                    </Button>
-                  </div>
                 </div>
               </div>
               <Button className="px-6 md:px-8 py-2 md:py-3 text-base md:text-lg mt-4">

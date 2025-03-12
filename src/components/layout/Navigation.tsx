@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Calendar, Phone, Menu, X, ChevronDown, MessageCircle } from 'lucide-react'
+import { Calendar, Phone, Menu, X, ChevronDown, MessageCircle, Clock } from "lucide-react"
 
 export function Navigation() {
   const [isNavFixed, setIsNavFixed] = useState(false)
@@ -101,26 +101,76 @@ export function Navigation() {
     </ul>
   )
 
+  // 診療時間情報コンポーネントを修正して、PCとモバイルで異なる表示にする
+  const ClinicHoursInfo = ({ className = "", isMobile = false }) => (
+    <div className={`flex items-start gap-2 ${className}`}>
+      <Clock className={`${isMobile ? "w-4 h-4" : "w-5 h-5"} text-primary mt-1 flex-shrink-0`} />
+      <div className={`text-gray-700 ${isMobile ? "text-[10px] leading-tight" : ""}`}>
+        {isMobile ? (
+          <>
+            <p>AM9:00-13:00</p>
+            <p>PM14:30-18:30</p>
+            <p>月・火・水・金・土(AMのみ)</p>
+          </>
+        ) : (
+          <>
+            <p>AM9:00-13:00/PM14:30-18:30</p>
+            <p>月・火・水・金・土曜(AMのみ)</p>
+          </>
+        )}
+      </div>
+    </div>
+  )
+
   return (
     <div>
-      <header ref={headerRef} className={`bg-white ${isMobileView ? "fixed top-0 left-0 right-0 z-50 shadow-md" : ""}`}>
+      {/* ヘッダー - モバイルとデスクトップ両方で表示 */}
+      <header ref={headerRef} className="bg-white">
         <div className="container mx-auto px-4 py-4">
-          <div className="flex justify-between items-center">
-            <Link href="/" className="flex items-center gap-3">
-              <Image src="/owl.png" alt="クリニックロゴ" width={40} height={40} className="w-10 h-10" priority />
-              <div>
-                <h1 className="text-primary text-2xl md:text-3xl mb-1 font-rounded">坂本クリニック</h1>
-                <p className="text-xs md:text-sm tracking-wider text-gray-600">SAKAMOTO CLINIC</p>
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="flex w-full md:w-auto justify-between items-start mb-2 md:mb-0">
+              {/* モバイル用のヘッダーレイアウトを修正 */}
+              {/* Link タグの部分を以下のように変更: */}
+
+              <div className="flex flex-col">
+                <div className="flex items-start">
+                  <Link href="/" className="flex items-center">
+                    <Image
+                      src="/owl.png"
+                      alt="クリニックロゴ"
+                      width={40}
+                      height={40}
+                      className="w-8 h-8 md:w-10 md:h-10"
+                      priority
+                    />
+                    <div>
+                      <h1 className="text-primary text-xl md:text-3xl font-rounded">坂本クリニック</h1>
+                      <p className="text-[8px] md:text-sm tracking-wider text-gray-600">SAKAMOTO CLINIC</p>
+                    </div>
+                  </Link>
+
+                  {/* モバイル用の診療時間情報 - ロゴの横に配置 */}
+                  <div className="md:hidden ml-2">
+                    <ClinicHoursInfo className="text-xs" isMobile={true} />
+                  </div>
+                </div>
               </div>
-            </Link>
+            </div>
+
             <div className="hidden md:flex items-center gap-4">
               <div className="text-right">
                 <p className="text-sm text-white bg-primary px-3 py-1 mb-1 inline-block rounded-full">
                   〒151-0073 東京都渋谷区笹塚１丁目３１−１１ ビラージュ笹塚1
                 </p>
-                <div className="flex items-center gap-2 justify-end">
-                  <Phone className="w-5 h-5 text-primary" />
-                  <p className="text-xl md:text-2xl font-light text-gray-700">03-3469-3926</p>
+                <div className="flex items-center gap-6 justify-end">
+                  {/* デスクトップ用の診療時間情報 */}
+                  <ClinicHoursInfo className="text-sm" />
+
+                  {/* 電話番号 */}
+                  <div className="flex items-center gap-2">
+                    <Phone className="w-5 h-5 text-primary" />
+                    <p className="text-xl md:text-2xl font-light text-gray-700">03-3469-3926</p>
+                  </div>
                 </div>
               </div>
               <div className="flex gap-2">
@@ -134,21 +184,34 @@ export function Navigation() {
                 </Button>
               </div>
             </div>
-            <button
-              className="lg:hidden text-gray-500 hover:text-gray-700"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
         </div>
       </header>
+
+      {/* モバイル用メニューボタン - 右上に固定表示 */}
+      <button
+        className="fixed top-4 right-4 z-50 flex flex-col items-center justify-center bg-[#a4c9c8] text-white p-2 rounded-full shadow-lg lg:hidden"
+        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+      >
+        {isMobileMenuOpen ? (
+          <>
+            <X size={28} />
+            <span className="text-xs mt-1">閉じる</span>
+          </>
+        ) : (
+          <>
+            <Menu size={28} />
+            <span className="text-xs mt-1">menu</span>
+          </>
+        )}
+      </button>
+
       <nav
         ref={navRef}
         className={`bg-[#a4c9c8] ${
           isMobileView
             ? isMobileMenuOpen
-              ? "block fixed top-[64px] left-0 right-0 z-50"
+              ? "block fixed top-0 left-0 right-0 z-40 h-screen overflow-y-auto"
               : "hidden"
             : isNavFixed
               ? "fixed top-0 left-0 right-0 z-50 shadow-md"
@@ -157,7 +220,7 @@ export function Navigation() {
       >
         <div className="container mx-auto px-4 max-w-6xl">
           <NavContent isFixed={isNavFixed} />
-          <div className="lg:hidden">
+          <div className="lg:hidden pt-16">
             {navigationItems.map((item) => (
               <div key={item.key}>
                 {item.subItems ? (
@@ -197,16 +260,6 @@ export function Navigation() {
                 )}
               </div>
             ))}
-            <div className="py-2 px-4 space-y-2">
-              <Button className="w-full bg-primary hover:bg-owl-dark text-white text-base px-4 py-2">
-                <Calendar className="w-4 h-4 mr-2" />
-                Web予約
-              </Button>
-              <Button className="w-full bg-green-600 hover:bg-green-700 text-white text-base px-4 py-2">
-                <MessageCircle className="w-4 h-4 mr-2" />
-                LINE予約<span className="text-xs">（工事中）</span>
-              </Button>
-            </div>
           </div>
         </div>
       </nav>
@@ -216,3 +269,4 @@ export function Navigation() {
 }
 
 export default Navigation
+

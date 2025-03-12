@@ -11,7 +11,6 @@ import {
   StickerIcon as Stomach,
   BookOpen,
   Users,
-  Calendar,
   Baby,
   TreesIcon as Lungs,
   Flower2,
@@ -21,7 +20,6 @@ import {
   MapPin,
   Phone,
   WormIcon as Virus,
-  MessageCircle,
 } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
@@ -69,8 +67,55 @@ export function HomePage() {
 
             {/* Right side: Map, Hours, and Web Reservation */}
             <div className="lg:w-1/2 space-y-6">
+              {/* Hours Table - モバイルでは最初に表示 */}
+              <div className="bg-white/95 p-4 rounded-lg shadow-lg w-full">
+                <div className="flex items-center gap-2 mb-4">
+                  <Clock className="w-5 h-5 text-[#a4c9c8]" />
+                  <h2 className="text-lg font-medium">診療時間</h2>
+                </div>
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b">
+                      <th className="py-2">時間</th>
+                      <th className="py-2">月</th>
+                      <th className="py-2">火</th>
+                      <th className="py-2">水</th>
+                      <th className="py-2">木</th>
+                      <th className="py-2">金</th>
+                      <th className="py-2">土</th>
+                      <th className="py-2">日</th>
+                    </tr>
+                  </thead>
+                  <tbody className="text-center">
+                    <tr className="border-b">
+                      <td className="py-2">09:00-13:00</td>
+                      <td>●</td>
+                      <td>●</td>
+                      <td>●</td>
+                      <td>/</td>
+                      <td>●</td>
+                      <td>▲</td>
+                      <td>/</td>
+                    </tr>
+                    <tr>
+                      <td className="py-2">14:30-18:30</td>
+                      <td>●</td>
+                      <td>●</td>
+                      <td>●</td>
+                      <td>/</td>
+                      <td>●</td>
+                      <td>/</td>
+                      <td>/</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <p className="text-xs text-gray-600 mt-2">
+                  予約なしでも受診できますが、予約の方が優先される場合がございますのでご了承ください。
+                </p>
+              </div>
+
+              {/* Map and Access Info - モバイルでは診療時間の後に表示 */}
               <div className="bg-white/95 p-4 rounded-lg shadow-lg">
-                {/* Map and Access Info */}
                 <div className="flex flex-col md:flex-row justify-between items-start gap-4 mb-4">
                   <div className="w-full md:w-1/2">
                     <Image
@@ -97,77 +142,6 @@ export function HomePage() {
                       <MapPin className="w-5 h-5 mr-1" />
                       <span className="font-medium">Google マップで見る</span>
                     </Link>
-                  </div>
-                </div>
-              </div>
-
-              {/* Hours and Web Reservation side by side */}
-              <div className="flex flex-col md:flex-row gap-4">
-                {/* Hours Table */}
-                <div className="bg-white/95 p-4 rounded-lg shadow-lg md:w-2/3">
-                  <div className="flex items-center gap-2 mb-4">
-                    <Clock className="w-5 h-5 text-[#a4c9c8]" />
-                    <h2 className="text-lg font-medium">診療時間</h2>
-                  </div>
-                  <table className="w-full text-sm">
-                    <thead>
-                      <tr className="border-b">
-                        <th className="py-2">時間</th>
-                        <th className="py-2">月</th>
-                        <th className="py-2">火</th>
-                        <th className="py-2">水</th>
-                        <th className="py-2">木</th>
-                        <th className="py-2">金</th>
-                        <th className="py-2">土</th>
-                        <th className="py-2">日</th>
-                      </tr>
-                    </thead>
-                    <tbody className="text-center">
-                      <tr className="border-b">
-                        <td className="py-2">09:00-13:00</td>
-                        <td>●</td>
-                        <td>●</td>
-                        <td>●</td>
-                        <td>/</td>
-                        <td>●</td>
-                        <td>▲</td>
-                        <td>/</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2">14:30-18:30</td>
-                        <td>●</td>
-                        <td>●</td>
-                        <td>●</td>
-                        <td>/</td>
-                        <td>●</td>
-                        <td>/</td>
-                        <td>/</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <p className="text-xs text-gray-600 mt-2">
-                    予約なしでも受診できますが、予約の方が優先される場合がございますのでご了承ください。
-                  </p>
-                </div>
-
-                {/* Web予約 */}
-                <div className="bg-white/95 p-4 rounded-lg shadow-lg md:w-1/3 flex flex-col justify-between">
-                  <div>
-                    <h2 className="text-lg font-medium mb-2 flex items-center">
-                      <Calendar className="w-5 h-5 mr-2 text-[#a4c9c8]" />
-                      予約
-                    </h2>
-                    <p className="text-sm text-gray-600 mb-4">24時間予約可能</p>
-                  </div>
-                  <div className="space-y-2">
-                    <Button className="w-full bg-[#a4c9c8] hover:bg-[#93b5b4] text-gray-800 text-base py-3 font-medium">
-                      <Calendar className="w-5 h-5 mr-2" />
-                      Web予約
-                    </Button>
-                    <Button className="w-full bg-green-600 hover:bg-green-700 text-white text-base py-3 font-medium">
-                      <MessageCircle className="w-5 h-5 mr-2" />
-                      LINE予約<span className="text-xs ml-1">（工事中）</span>
-                    </Button>
                   </div>
                 </div>
               </div>
@@ -469,5 +443,4 @@ export function HomePage() {
     </div>
   )
 }
-
 
