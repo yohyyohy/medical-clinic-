@@ -1,6 +1,5 @@
-import type { IConfig } from "next-sitemap"
-
-const config: IConfig = {
+/** @type {import('next-sitemap').IConfig} */
+const config = {
   siteUrl: process.env.SITE_URL || "https://www.sakamoto-clinic.com",
   generateRobotsTxt: true,
   exclude: ["/server-sitemap.xml"],
@@ -9,5 +8,5 @@ const config: IConfig = {
   },
 }
 
-export default config
+module.exports = config
 
