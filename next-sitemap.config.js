@@ -4,9 +4,12 @@ const config = {
   generateRobotsTxt: true,
   exclude: ["/server-sitemap.xml"],
   robotsTxtOptions: {
-    additionalSitemaps: ["https://www.sakamoto-clinic.com/server-sitemap.xml"],
+    additionalSitemaps: [
+      "https://www.sakamoto-clinic.com/server-sitemap.xml",
+    ],
   },
-}
+  sitemapSize: 5000,
+  outDir: "public",
+};
 
-module.exports = config
-
+module.exports = config;
