@@ -1,6 +1,7 @@
+/** @type {import('next').NextConfig} */
 const { withSitemap } = require('next-sitemap');
 
-module.exports = withSitemap({
+const nextConfig = withSitemap({
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -15,3 +16,5 @@ module.exports = withSitemap({
   sitemapSize: 5000,
   outDir: "public",
 });
+
+module.exports = nextConfig;
